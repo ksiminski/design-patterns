@@ -1,0 +1,38 @@
+kompilator=g++
+standard=-std=c++14
+optymalizacja=-O3
+errors=-pedantic-errors
+
+# debug=-g
+debug=
+
+
+
+.PHONY : clean 
+
+
+__ : main
+	./main
+
+#	valgrind --leak-check=yes ./main
+
+cut.o : cut.cpp
+	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
+main.o : main.cpp
+	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
+modifier.o : modifier.cpp
+	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
+sort.o : sort.cpp
+	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
+split.o : split.cpp
+	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
+uniq.o : uniq.cpp
+	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
+
+main : cut.o main.o modifier.o sort.o split.o uniq.o 
+	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -o $@ $^
+
+
+clean : 
+	rm main cut.o main.o modifier.o sort.o split.o uniq.o 
+
