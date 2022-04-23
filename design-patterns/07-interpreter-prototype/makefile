@@ -1,48 +1,105 @@
+
+#############################
+# Generator plikow makefile #
+# Krzysztof Siminski, 2022  #
+#############################
+
+# STALE:
 kompilator=g++
-standard=-std=c++14
-optymalizacja=-O3
+standard=-std=c++20
+
+optRelease=-O3
+optDebug=
+
 errors=-pedantic-errors
 
-# debug=-g
-debug=
+release=
+debug=-g
 
+#rownoleglosc=-fopenmp
+rownoleglosc=
 
+release_folder=_release
+debug_folder=_debug
 
-.PHONY : clean 
+#############################
 
+.PHONY : clean $(debug_folder) $(release_folder)
 
-__ : main
-	./main
+# opcje uruchomienia projektu:
 
-#	valgrind --leak-check=yes ./main
+release : $(release_folder) $(release_folder)/main
+	./$(release_folder)/main
 
-character.o : character.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-function.o : function.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-identifier.o : identifier.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-integer.o : integer.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-main.o : main.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-nonterminal.o : nonterminal.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-parameter.o : parameter.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-parameters.o : parameters.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-symbol.o : symbol.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-terminal.o : terminal.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-type.o : type.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
+debug : $(debug_folder) $(debug_folder)/main
+	valgrind --leak-check=yes ./$(debug_folder)/main
 
-main : character.o function.o identifier.o integer.o main.o nonterminal.o parameter.o parameters.o symbol.o terminal.o type.o 
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -o $@ $^
+# utworzenie folderow:
 
+$(release_folder) : 
+	mkdir -p $(release_folder)
+$(debug_folder) : 
+	mkdir -p $(debug_folder)
+
+# kompilacja zrodel:
+
+$(release_folder)/character.o : character.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/character.o : character.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/symbol.o : symbol.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/symbol.o : symbol.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/parameter.o : parameter.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/parameter.o : parameter.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/nonterminal.o : nonterminal.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/nonterminal.o : nonterminal.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/parameters.o : parameters.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/parameters.o : parameters.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/type.o : type.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/type.o : type.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/main.o : main.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/main.o : main.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/function.o : function.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/function.o : function.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/integer.o : integer.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/integer.o : integer.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/terminal.o : terminal.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/terminal.o : terminal.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/identifier.o : identifier.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/identifier.o : identifier.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+
+# linkowanie:
+
+$(release_folder)/main : $(release_folder)/character.o $(release_folder)/symbol.o $(release_folder)/parameter.o $(release_folder)/nonterminal.o $(release_folder)/parameters.o $(release_folder)/type.o $(release_folder)/main.o $(release_folder)/function.o $(release_folder)/integer.o $(release_folder)/terminal.o $(release_folder)/identifier.o 
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -o $@ $^
+
+$(debug_folder)/main : $(debug_folder)/character.o $(debug_folder)/symbol.o $(debug_folder)/parameter.o $(debug_folder)/nonterminal.o $(debug_folder)/parameters.o $(debug_folder)/type.o $(debug_folder)/main.o $(debug_folder)/function.o $(debug_folder)/integer.o $(debug_folder)/terminal.o $(debug_folder)/identifier.o 
+	$(kompilator) $(standard) $(debug) $(optDebug) $(rownoleglosc) $(errors) -o $@ $^
+
+# usuniecie plikow skompilowanych:
 
 clean : 
-	rm main character.o function.o identifier.o integer.o main.o nonterminal.o parameter.o parameters.o symbol.o terminal.o type.o 
+	if [ -d $(debug_folder)      ] ; then rm -r $(debug_folder)   ; fi
+	if [ -d $(release_folder)    ] ; then rm -r $(release_folder) ; fi;
+
 

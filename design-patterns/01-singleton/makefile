@@ -1,60 +1,69 @@
 
- 
+#############################
+# Generator plikow makefile #
+# Krzysztof Siminski, 2022  #
+#############################
+
+# STALE:
 kompilator=g++
 standard=-std=c++20
-optymalizacja=-O3
-# optymalizacja=
-# debug=-g
-debug=
-profilowanie=-pg
-memory=../memory/nvwa
 
-.PHONY: clean
+optRelease=-O3
+optDebug=
 
+errors=-pedantic-errors
 
-__ : main
-	./main   
-	            
-main : main.o \
-       singleton.o \
-       debug_new.o  static_mem_pool.o  mem_pool_base.o  bool_array.o  file_line_reader.o  mmap_reader_base.o
-	$(kompilator) $(standard) $(debug) $(optymalizacja) -pedantic-errors -o $@ $^ 
-		
-main.o : main.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) -c -pedantic-errors -o $@ $^ 
-singleton.o : singleton.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) -c -pedantic-errors -o $@ $^ 
+release=
+debug=-g
 
- 
-	
-# kompilacja biblioteki do kontroli uzycia pamieci
+#rownoleglosc=-fopenmp
+rownoleglosc=
 
-debug_new.o : $(memory)/debug_new.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^ 
-	
-static_mem_pool.o : $(memory)/static_mem_pool.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^ 		
+release_folder=_release
+debug_folder=_debug
 
-mem_pool_base.o : $(memory)/mem_pool_base.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^ 		
+#############################
 
-bool_array.o : $(memory)/bool_array.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^ 	
+.PHONY : clean $(debug_folder) $(release_folder)
 
-file_line_reader.o : $(memory)/file_line_reader.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^ 
+# opcje uruchomienia projektu:
 
-mmap_reader_base.o : $(memory)/mmap_reader_base.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^ 
-	
-	
-########################
-		
- 
-	
-clean : 	
-	for f in `ls *.o *~ ` ; do  if [ -f $$f ] ; then rm $$f  ; fi;   done;
-	if [ -f main  ] ; then rm    main  ; fi ;
-	if [ -d html  ] ; then rm -r html  ; fi ;	
-	if [ -d latex ] ; then rm -r latex ; fi ;	
+release : $(release_folder) $(release_folder)/main
+	./$(release_folder)/main
+
+debug : $(debug_folder) $(debug_folder)/main
+	valgrind --leak-check=yes ./$(debug_folder)/main
+
+# utworzenie folderow:
+
+$(release_folder) : 
+	mkdir -p $(release_folder)
+$(debug_folder) : 
+	mkdir -p $(debug_folder)
+
+# kompilacja zrodel:
+
+$(release_folder)/main.o : main.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/main.o : main.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/singleton.o : singleton.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/singleton.o : singleton.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+
+# linkowanie:
+
+$(release_folder)/main : $(release_folder)/main.o $(release_folder)/singleton.o 
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -o $@ $^
+
+$(debug_folder)/main : $(debug_folder)/main.o $(debug_folder)/singleton.o 
+	$(kompilator) $(standard) $(debug) $(optDebug) $(rownoleglosc) $(errors) -o $@ $^
+
+# usuniecie plikow skompilowanych:
+
+clean : 
+	if [ -d $(debug_folder)      ] ; then rm -r $(debug_folder)   ; fi
+	if [ -d $(release_folder)    ] ; then rm -r $(release_folder) ; fi;
+
 

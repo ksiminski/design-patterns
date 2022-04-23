@@ -1,38 +1,85 @@
+
+#############################
+# Generator plikow makefile #
+# Krzysztof Siminski, 2022  #
+#############################
+
+# STALE:
 kompilator=g++
-standard=-std=c++14
-optymalizacja=-O3
+standard=-std=c++20
+
+optRelease=-O3
+optDebug=
+
 errors=-pedantic-errors
 
-# debug=-g
-debug=
+release=
+debug=-g
 
+#rownoleglosc=-fopenmp
+rownoleglosc=
 
+release_folder=_release
+debug_folder=_debug
 
-.PHONY : clean 
+#############################
 
+.PHONY : clean $(debug_folder) $(release_folder)
 
-__ : main
-	./main
+# opcje uruchomienia projektu:
 
-#	valgrind --leak-check=yes ./main
+release : $(release_folder) $(release_folder)/main
+	./$(release_folder)/main
 
-car.o : car.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-IVisitable.o : IVisitable.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-load_printer.o : load_printer.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-main.o : main.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-name_printer.o : name_printer.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-plane.o : plane.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
+debug : $(debug_folder) $(debug_folder)/main
+	valgrind --leak-check=yes ./$(debug_folder)/main
 
-main : car.o IVisitable.o load_printer.o main.o name_printer.o plane.o 
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -o $@ $^
+# utworzenie folderow:
 
+$(release_folder) : 
+	mkdir -p $(release_folder)
+$(debug_folder) : 
+	mkdir -p $(debug_folder)
+
+# kompilacja zrodel:
+
+$(release_folder)/IVisitable.o : IVisitable.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/IVisitable.o : IVisitable.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/car.o : car.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/car.o : car.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/main.o : main.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/main.o : main.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/name_printer.o : name_printer.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/name_printer.o : name_printer.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/plane.o : plane.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/plane.o : plane.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/load_printer.o : load_printer.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/load_printer.o : load_printer.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+
+# linkowanie:
+
+$(release_folder)/main : $(release_folder)/IVisitable.o $(release_folder)/car.o $(release_folder)/main.o $(release_folder)/name_printer.o $(release_folder)/plane.o $(release_folder)/load_printer.o 
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -o $@ $^
+
+$(debug_folder)/main : $(debug_folder)/IVisitable.o $(debug_folder)/car.o $(debug_folder)/main.o $(debug_folder)/name_printer.o $(debug_folder)/plane.o $(debug_folder)/load_printer.o 
+	$(kompilator) $(standard) $(debug) $(optDebug) $(rownoleglosc) $(errors) -o $@ $^
+
+# usuniecie plikow skompilowanych:
 
 clean : 
-	rm main car.o IVisitable.o load_printer.o main.o name_printer.o plane.o 
+	if [ -d $(debug_folder)      ] ; then rm -r $(debug_folder)   ; fi
+	if [ -d $(release_folder)    ] ; then rm -r $(release_folder) ; fi;
+
 

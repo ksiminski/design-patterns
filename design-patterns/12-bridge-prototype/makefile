@@ -1,40 +1,89 @@
+
+#############################
+# Generator plikow makefile #
+# Krzysztof Siminski, 2022  #
+#############################
+
+# STALE:
 kompilator=g++
-standard=-std=c++14
-optymalizacja=-O3
+standard=-std=c++20
+
+optRelease=-O3
+optDebug=
+
 errors=-pedantic-errors
 
-# debug=-g
-debug=
+release=
+debug=-g
 
+#rownoleglosc=-fopenmp
+rownoleglosc=
 
+release_folder=_release
+debug_folder=_debug
 
-.PHONY : clean 
+#############################
 
+.PHONY : clean $(debug_folder) $(release_folder)
 
-__ : main
-	./main
+# opcje uruchomienia projektu:
 
-#	valgrind --leak-check=yes ./main
+release : $(release_folder) $(release_folder)/main
+	./$(release_folder)/main
 
-device.o : device.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-main.o : main.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-muting_remote.o : muting_remote.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-radio.o : radio.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-remote_control.o : remote_control.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-simple_remote.o : simple_remote.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
-tv_set.o : tv_set.cpp
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -c -o $@ $^
+debug : $(debug_folder) $(debug_folder)/main
+	valgrind --leak-check=yes ./$(debug_folder)/main
 
-main : device.o main.o muting_remote.o radio.o remote_control.o simple_remote.o tv_set.o 
-	$(kompilator) $(standard) $(debug) $(optymalizacja) $(errors) -o $@ $^
+# utworzenie folderow:
 
+$(release_folder) : 
+	mkdir -p $(release_folder)
+$(debug_folder) : 
+	mkdir -p $(debug_folder)
+
+# kompilacja zrodel:
+
+$(release_folder)/remote_control.o : remote_control.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/remote_control.o : remote_control.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/main.o : main.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/main.o : main.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/device.o : device.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/device.o : device.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/radio.o : radio.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/radio.o : radio.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/simple_remote.o : simple_remote.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/simple_remote.o : simple_remote.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/muting_remote.o : muting_remote.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/muting_remote.o : muting_remote.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+$(release_folder)/tv_set.o : tv_set.cpp
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -c -o $@ $^
+$(debug_folder)/tv_set.o : tv_set.cpp
+	$(kompilator) $(standard) $(debug) $(optyDebug) $(rownoleglosc) $(errors) -c -o $@ $^
+
+# linkowanie:
+
+$(release_folder)/main : $(release_folder)/remote_control.o $(release_folder)/main.o $(release_folder)/device.o $(release_folder)/radio.o $(release_folder)/simple_remote.o $(release_folder)/muting_remote.o $(release_folder)/tv_set.o 
+	$(kompilator) $(standard) $(release) $(optRelease) $(rownoleglosc) $(errors) -o $@ $^
+
+$(debug_folder)/main : $(debug_folder)/remote_control.o $(debug_folder)/main.o $(debug_folder)/device.o $(debug_folder)/radio.o $(debug_folder)/simple_remote.o $(debug_folder)/muting_remote.o $(debug_folder)/tv_set.o 
+	$(kompilator) $(standard) $(debug) $(optDebug) $(rownoleglosc) $(errors) -o $@ $^
+
+# usuniecie plikow skompilowanych:
 
 clean : 
-	rm main device.o main.o muting_remote.o radio.o remote_control.o simple_remote.o tv_set.o 
+	if [ -d $(debug_folder)      ] ; then rm -r $(debug_folder)   ; fi
+	if [ -d $(release_folder)    ] ; then rm -r $(release_folder) ; fi;
+
 
