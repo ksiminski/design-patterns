@@ -15,6 +15,8 @@ class modifier
 protected:
     modifier * pNext = nullptr;
     
+    /** This method is used in modify method, but is not implemented in this class. 
+        It is implemented in derived classes. */
     virtual std::vector<std::string> operation (std::vector<std::string> str) const = 0;
     
 public:
@@ -28,7 +30,8 @@ public:
     void addModifier (const modifier & mod);
     
     /** The method uses all modifiers in a list to modify a vector of strings.
-        Template class design pattern. */
+        Template class design pattern. This method is only "partially" implemented in this class,
+        because it calls operation method that is NOT implemented in this class. */
     std::vector<std::string> modify (std::vector<std::string> str) const;
         
     virtual modifier * clone () const = 0; ///< prototype design pattern

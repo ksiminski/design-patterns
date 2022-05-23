@@ -58,15 +58,15 @@ void sequence::add_commands (const command & com)
    commands.push_back(com.clone());
 }
 
-void sequence::do_commands (std::vector<double> & liczby)
+void sequence::do_commands (std::vector<double> & numbers)
 {
    for (auto it = commands.begin(); it != commands.end(); it++)
-      (*it)->do_command(liczby);
+      (*it)->do_command(numbers);
 }
 
-void sequence::undo_commands (std::vector<double> & liczby)
+void sequence::undo_commands (std::vector<double> & numbers)
 {
    for (auto it = commands.rbegin(); it != commands.rend(); it++)
-      (*it)->undo_command(liczby);
+      (*it)->undo_command(numbers);
 }
    
