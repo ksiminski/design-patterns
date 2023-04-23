@@ -3,8 +3,8 @@
 /* copyright by Krzysztof Siminski          */
 /********************************************/
 
-#ifndef KOPIEC_H
-#define KOPIEC_H
+#ifndef HEAP_H
+#define HEAP_H
 
 #include <deque>
 
