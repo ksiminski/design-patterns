@@ -43,7 +43,7 @@ remote_control::~remote_control ()
 remote_control::remote_control(const remote_control& orig)
 {
     if (orig._pDevice)
-        _pDevice = orig._pDevice->clone();
+        _pDevice = orig._pDevice->clone();  // prototype design pattern
     else 
         _pDevice = nullptr;
 }
@@ -57,7 +57,7 @@ remote_control & remote_control::operator=(const remote_control& orig)
     delete _pDevice;
     
      if (orig._pDevice)
-        _pDevice = orig._pDevice->clone();
+        _pDevice = orig._pDevice->clone();  // prototype design pattern
     else 
         _pDevice = nullptr;
     

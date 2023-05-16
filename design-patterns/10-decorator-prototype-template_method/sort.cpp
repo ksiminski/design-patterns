@@ -75,7 +75,7 @@ std::vector<std::string> sort::operation(std::vector<std::string> ss) const
         std::multimap <std::string, std::string> rows;
         for (auto & line : ss)
         {
-            // trzeba podzelic kazda linie na slowa
+            // split line into words
             auto words = split_string(line);
             if (_column < words.size())
                 rows.insert(std::make_pair(words[_column], line));

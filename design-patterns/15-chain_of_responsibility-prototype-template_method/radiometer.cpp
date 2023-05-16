@@ -15,7 +15,7 @@ bool radiometer::ok (const parameters & p) const
     return (p.radiation < _maximal);
 }
 
-radiometer::radiometer (double maksymalna) : _maximal(maksymalna)
+radiometer::radiometer (double maximal) : _maximal(maximal)
 {
 }
 

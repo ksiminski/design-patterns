@@ -23,7 +23,7 @@ class list
    
    
 public:
-    struct iterator
+    struct iterator  // nested structure
     {
         item * p;
         

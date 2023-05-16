@@ -8,11 +8,11 @@
 #include "modifier.h"
 
 
-std::vector<std::string> modifier::modify(std::vector<std::string> text) const     // This method is a template design pattern.
+std::vector<std::string> modifier::modify(std::vector<std::string> text) const     // This method is a template method design pattern.
 {   
     auto result = operation (text);  // Operation method is NOT implemented in this class! It is implemented in derived classes.
     if (pNext)
-        return pNext->modify(result);
+        return pNext->modify(result);  // decorator design pattern
     else
         return result;
 }
@@ -21,7 +21,7 @@ std::vector<std::string> modifier::modify(std::vector<std::string> text) const  
 void modifier::addModifier(const modifier& mod)
 {
     if (not pNext)
-        pNext = mod.clone();
+        pNext = mod.clone();   // prototype design pattern
     else 
         pNext->addModifier(mod);
 }

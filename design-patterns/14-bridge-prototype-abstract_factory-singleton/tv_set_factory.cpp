@@ -15,10 +15,10 @@ device * tv_set_factory::produce() const
 }
 
 
-device_factory & tv_set_factory::getInstance() 
+device_factory & tv_set_factory::getInstance()   // singleton design pattern
 {
-    static tv_set_factory egzemplarz;
-    return egzemplarz;
+    static tv_set_factory item;
+    return item;
 }
 
 tv_set_factory::tv_set_factory()

@@ -13,7 +13,7 @@
 class tv_set_factory : public device_factory 
 {
 public:
-    static device_factory & getInstance (); 
+    static device_factory & getInstance ();   // singleton design pattern
     
 protected:
     tv_set_factory ();

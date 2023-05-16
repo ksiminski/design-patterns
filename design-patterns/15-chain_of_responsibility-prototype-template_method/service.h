@@ -26,6 +26,8 @@ public:
     
     /** This method is a Template method design pattern. */
     bool serve (const parameters & p) const;
+
+    /** This method is a prototype design pattern. */
     virtual service * clone () const = 0;
 };
 
