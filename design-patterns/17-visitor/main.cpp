@@ -26,11 +26,11 @@ In our example we implement two visitors for vehicles. One of them is responsibl
 int main()
 {
     
-    plane antonov;
-    antonov.setName("antonov");
+    plane boeing;
+    boeing.setName("boeing");
     
-    plane messerschmidt;
-    messerschmidt.setName("messerschmidt");
+    plane airbus;
+    airbus.setName("airbus");
     
     car fiat;
     fiat.setName("fiat");
@@ -41,7 +41,7 @@ int main()
     star.setLoad(45.6);
     
 
-    std::vector<IVisitable *> vehicles { & antonov, & messerschmidt, & fiat, & star };
+    std::vector<IVisitable *> vehicles { & boeing, & airbus, & fiat, & star };
     
     load_printer load;
     for (auto p : vehicles)

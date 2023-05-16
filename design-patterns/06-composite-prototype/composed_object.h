@@ -25,10 +25,10 @@ protected:
    virtual ~composed_object ();
    
    /** The method draws an object. */
-   virtual void draw () const;
+   virtual void draw () const override;
    
    /** The method transforms an object. */
-   virtual void transform ();
+   virtual void transform () override;
    
    /** design pattern prototype */
    virtual graphical_object * clone() const override;

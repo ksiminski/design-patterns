@@ -53,8 +53,8 @@ This is a practical application of dependence inversion principle (SOLID). Class
 
 int main ()
 {
-   mergesort      mer;
-   selection_sort sel;
+   mergesort      mer;  // O(n log n)
+   selection_sort sel;  // O(n²)
     
    transform(mer);  // Here we use mergesort as a sorter.
    

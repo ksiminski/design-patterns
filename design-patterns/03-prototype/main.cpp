@@ -37,7 +37,7 @@ int main ()
     std::cout << "part b:" << std::endl;
     zoo part_b (garden);
     part_b.print();
-    
+   
     part_b.add (twitty);
     std::cout << "-----------" << std::endl;
     part_b.print();

@@ -15,8 +15,8 @@ device * radio_factory::produce() const
 
 device_factory & radio_factory::getInstance() 
 {
-    static radio_factory egzemplarz;
-    return egzemplarz;
+    static radio_factory item;
+    return item;
 }
 
 radio_factory::radio_factory()

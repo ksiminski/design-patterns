@@ -34,6 +34,7 @@ int main ()
    
    std::cout << simple_remote_for_Daisy.test_device () << std::endl;
    
+  
    simple_remote_for_Daisy.channel_up();
    simple_remote_for_Daisy.channel_up();
    simple_remote_for_Daisy.channel_up();

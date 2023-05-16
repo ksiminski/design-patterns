@@ -52,7 +52,7 @@ int main ()
    remote_for_Sapphire.unmute();
    std::cout << remote_for_Sapphire.test_device() << std::endl;
    
-    
+   //////////////////////////// 
    std::cout << "copy of remote" << std::endl;
    muting_remote remote_for_Nephryte (remote_for_Sapphire);
    

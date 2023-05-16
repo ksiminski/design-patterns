@@ -14,8 +14,8 @@ class increment : public command
 {
    double _value;
 public:
-   virtual void do_command (std::vector<double> & liczby) const;
-   virtual void undo_command  (std::vector<double> & liczby) const;
+   virtual void do_command (std::vector<double> & numbers) const;
+   virtual void undo_command  (std::vector<double> & numbers) const;
    increment (const double value);
    virtual command * clone () const;
    virtual ~increment();

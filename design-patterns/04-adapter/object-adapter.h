@@ -14,7 +14,7 @@
 /** Object adapter is a wrapper. It is a composite and a heap is its component. Simultaneously object adapter IS a priority_queue -- this is why we can use in with test class. */
 class object_adapter : public priority_queue 
 {
-    heap _queue;
+  heap _queue;  // aggregation
  public:
   void pop() override;
   void push(double d) override;

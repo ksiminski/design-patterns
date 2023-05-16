@@ -11,7 +11,7 @@
 #include <string>
 #include "split.h"
 
-/** The class sorts a vector of string with a string in a given column being the sort key. */
+/** The class sorts a vector of strings with a string in a given column being the sort key. */
 class sort : public split
 {
 protected:

@@ -12,7 +12,7 @@
 class test
 {
 protected:
-    priority_queue * _pHeap = nullptr;
+   priority_queue * _pHeap = nullptr;
  public:
    test ();
    test (const priority_queue &);  // dependency injection

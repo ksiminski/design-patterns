@@ -35,6 +35,7 @@ int main ()
        std::cout << i << " ";
    std::cout << std::endl;
    
+   std::cout << "poping values: ";
    int value = -1;    
    while (l.size() > 0) 
    {

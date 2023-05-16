@@ -50,7 +50,7 @@ int main ()
    news_24h.accept_subscription (& laptop);
    The_Gliwice_Post.accept_subscription (& phone_reader);
    
-   // And how seders send some news and observers respond:
+   // And how senders send some news and observers respond:
    local_radio.send("Vulcano explosion"); // local_radio has three observers
    music_4U.send("Tsunami in Macaronesia"); // no observer!
    news_24h.send("New Sunspots"); // two observers

@@ -30,8 +30,8 @@ public:
     public:
         iterator (const item & it);
         iterator (item * p);
-        iterator& operator++ ();
-        iterator& operator++ (int);
+        iterator& operator++ ();     // preincrementation
+        iterator  operator++ (int);  // postincrementation
         bool operator!= (const iterator & p);
         T & operator * ();
     };
@@ -221,9 +221,12 @@ typename list<T>::iterator & list<T>::iterator::operator++()
 }
 
 template<class T>
-typename list<T>::iterator & list<T>::iterator::operator++(int)
+typename list<T>::iterator  list<T>::iterator::operator++(int)
 {
-    return this->operator++();
+    auto save (*this);
+    ++*this;    
+    return save;
+    
 }
 
 

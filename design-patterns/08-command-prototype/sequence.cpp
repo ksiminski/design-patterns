@@ -55,7 +55,7 @@ sequence & sequence::operator = (sequence && orig)
 
 void sequence::add_commands (const command & com)
 {
-   commands.push_back(com.clone());
+   commands.push_back(com.clone());  //prototype design pattern
 }
 
 void sequence::do_commands (std::vector<double> & numbers)

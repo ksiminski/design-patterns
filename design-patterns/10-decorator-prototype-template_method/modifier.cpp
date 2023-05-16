@@ -8,9 +8,9 @@
 #include "modifier.h"
 
 
-std::vector<std::string> modifier::modify(std::vector<std::string> napis) const     // This method is a template design pattern.
+std::vector<std::string> modifier::modify(std::vector<std::string> text) const     // This method is a template design pattern.
 {   
-    auto result = operation (napis);  // Operation method is NOT implemented in this class! It is implemented in derived classes.
+    auto result = operation (text);  // Operation method is NOT implemented in this class! It is implemented in derived classes.
     if (pNext)
         return pNext->modify(result);
     else

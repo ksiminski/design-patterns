@@ -16,9 +16,9 @@ modifier * cut::clone() const
 }
 
 
-cut::cut(const int kolumna)
+cut::cut(const int column)
 {
-    _column = kolumna;
+    _column = column;
 }
 
 cut::cut(const cut& orig) : split (orig)
