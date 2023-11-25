@@ -6,13 +6,20 @@ You can find here:
 
 1. creational design patterns
    * singleton
+      - simple 
+      - curiously recurring template
    * prototype
    * absract factory
    * builder 
 1. structural design patterns
    * adapter
+      - class adapter 
+      - object adapter 
    * composite
    * bridge
+   * decorator
+      - class based
+      - lambda based
    * proxy
    * decorator
    * flyweight
