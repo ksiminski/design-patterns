@@ -1,6 +1,6 @@
 # Design patterns implemented in C++
 
-Design patterns (Gang of Four) implemented in C++. This are both standalone patterns and highly intertwined. 
+Design patterns (Gang of Four) implemented in C++. These are both standalone patterns and highly intertwined. 
 
 You can find here:
 
@@ -9,7 +9,7 @@ You can find here:
       - simple 
       - curiously recurring template
    * prototype
-   * absract factory
+   * abstract factory
    * builder 
 1. structural design patterns
    * adapter
